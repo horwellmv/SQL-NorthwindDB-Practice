@@ -1,4 +1,19 @@
-# 📘 SQL Northwind DB Practice  
+<!-- Banner principal -->
+<h1 align="center">📘 SQL-NorthwindDB-Practice</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SQL-Practice-blue?style=for-the-badge&logo=database&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-Programming-orange?style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/Angular-Web%20Dev-red?style=for-the-badge&logo=angular&logoColor=white" />
+  <img src="https://img.shields.io/badge/Postman-API%20Testing-orange?style=for-the-badge&logo=postman&logoColor=white" />
+  <img src="https://img.shields.io/badge/Git-Version%20Control-black?style=for-the-badge&logo=git&logoColor=white" />
+</p>
+
+<p align="center">
+  <b>Desarrollado por: <a href="https://github.com/horwellmv">horwellmv</a> Dev · Analista de Sistemas · Estudiante de Lic. en Tecnologías Digitales (UNICABA)</b>
+</p>
+
+
 
 En este proyecto recopilo una serie de **ejercicios prácticos con SQL** utilizando la clásica base de datos **Northwind**.  
 El objetivo es **practicar y fortalecer habilidades en SQL**, comenzando con consultas simples y avanzando hacia funciones, procedimientos y triggers.  
