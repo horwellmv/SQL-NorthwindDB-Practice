@@ -1,12 +1,13 @@
 ¡Excelente, vamos a practicar! 🚀
-Entonces aqui tenemos una **lista de 50 ejercicios con Northwind**, organizados en **bloques temáticos**.
-Cada bloque tendrá:
+
+Aqui tenemos una **lista de 50 ejercicios con Northwind**, organizados en **bloques temáticos**.
+Cada bloque trae:
 
 * Una **explicación teórica corta** del concepto.
 * Un **mini ejemplo ilustrativo** (general, no resuelto con Northwind).
 * Una **serie de ejercicios** que van de lo más simple a lo más complejo.
 
-De esta forma no solo tienes práctica, sino también una guía de aprendizaje progresiva 📚.
+De esta forma no solo tenemos práctica, sino también una guía de aprendizaje progresiva 📚.
 
 ---
 
@@ -223,5 +224,5 @@ SELECT p.Nombre, c.NombreCategoria FROM Productos p JOIN Categorias c ON p.Categ
 
 ---
 
-✅ listo? lo hemos logrado, felicidades, vamos a buscarnos otro reto.
+✅ listo? lo hemos logrado, felicidades, vamos a buscarnos otro reto...
 
