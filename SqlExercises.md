@@ -1,4 +1,19 @@
-¡Excelente, vamos a practicar! 🚀
+<!-- Banner principal -->
+<h1 align="center">📘 50 Ejercicios SQL con Northwind</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SQL-Practice-blue?style=for-the-badge&logo=database&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-Programming-orange?style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/Angular-Web%20Dev-red?style=for-the-badge&logo=angular&logoColor=white" />
+  <img src="https://img.shields.io/badge/Postman-API%20Testing-orange?style=for-the-badge&logo=postman&logoColor=white" />
+  <img src="https://img.shields.io/badge/Git-Version%20Control-black?style=for-the-badge&logo=git&logoColor=white" />
+</p>
+
+<p align="center">
+  <b>Desarrollado por: <a href="https://github.com/horwellmv">horwellmv</a> Dev · Analista de Sistemas · Estudiante de Lic. en Tecnologías Digitales (UNICABA)</b>
+</p>
+
+---
 
 Aqui tenemos una **lista de 50 ejercicios con Northwind**, organizados en **bloques temáticos**.
 Cada bloque trae:
@@ -8,10 +23,6 @@ Cada bloque trae:
 * Una **serie de ejercicios** que van de lo más simple a lo más complejo.
 
 De esta forma no solo tenemos práctica, sino también una guía de aprendizaje progresiva 📚.
-
----
-
-# 📘 50 Ejercicios SQL con Northwind
 
 ---
 
@@ -49,12 +60,13 @@ SELECT * FROM Productos WHERE Precio BETWEEN 10 AND 20;
 ```
 
 **Ejercicios**
-6\. Recuperar productos cuyo precio sea mayor a 50.
-7\. Recuperar pedidos hechos en el año 1997.
-8\. Recuperar empleados cuyo país sea “USA”.
-9\. Recuperar productos con stock entre 10 y 50 unidades.
-10\. Recuperar clientes de países específicos (México, Argentina, Brasil).
-11\. Recuperar empleados cuyo apellido empiece con “D”.
+
+6. Recuperar productos cuyo precio sea mayor a 50.
+7. Recuperar pedidos hechos en el año 1997.
+8. Recuperar empleados cuyo país sea “USA”.
+9. Recuperar productos con stock entre 10 y 50 unidades.
+10. Recuperar clientes de países específicos (México, Argentina, Brasil).
+11. Recuperar empleados cuyo apellido empiece con “D”.
 
 ---
 
@@ -68,9 +80,10 @@ SELECT Nombre, Precio FROM Productos ORDER BY Precio DESC;
 ```
 
 **Ejercicios**
-12\. Recuperar productos ordenados por categoría y luego por precio.
-13\. Recuperar empleados ordenados por fecha de contratación (más antiguos primero).
-14\. Recuperar empleados ordenados por país ascendente y ciudad descendente.
+
+12. Recuperar productos ordenados por categoría y luego por precio.
+13. Recuperar empleados ordenados por fecha de contratación (más antiguos primero).
+14. Recuperar empleados ordenados por país ascendente y ciudad descendente.
 
 ---
 
@@ -90,12 +103,13 @@ JOIN Categorias c ON p.CategoriaID = c.ID;
 ```
 
 **Ejercicios**
-15\. Recuperar lista de pedidos con nombre del cliente asociado.
-16\. Recuperar lista de productos junto con su categoría.
-17\. Recuperar lista de pedidos junto con el nombre completo del empleado que lo gestionó.
-18\. Recuperar lista de productos y su proveedor.
-19\. Recuperar lista de pedidos con cliente, empleado y transportista.
-20\. Recuperar lista de categorías con la cantidad de productos que tiene cada una.
+
+15. Recuperar lista de pedidos con nombre del cliente asociado.
+16. Recuperar lista de productos junto con su categoría.
+17. Recuperar lista de pedidos junto con el nombre completo del empleado que lo gestionó.
+18. Recuperar lista de productos y su proveedor.
+19. Recuperar lista de pedidos con cliente, empleado y transportista.
+20. Recuperar lista de categorías con la cantidad de productos que tiene cada una.
 
 ---
 
@@ -109,12 +123,13 @@ SELECT AVG(Salario) AS Promedio FROM Empleados;
 ```
 
 **Ejercicios**
-21\. Recuperar el precio máximo de los productos.
-22\. Recuperar el precio promedio de los productos de la categoría “Beverages”.
-23\. Recuperar el total de pedidos realizados por cada cliente.
-24\. Recuperar los 5 productos más caros.
-25\. Recuperar clientes que han realizado más de 10 pedidos.
-26\. Recuperar el total de ingresos por cada producto (cantidad \* precio unitario).
+
+21. Recuperar el precio máximo de los productos.
+22. Recuperar el precio promedio de los productos de la categoría “Beverages”.
+23. Recuperar el total de pedidos realizados por cada cliente.
+24. Recuperar los 5 productos más caros.
+25. Recuperar clientes que han realizado más de 10 pedidos.
+26. Recuperar el total de ingresos por cada producto (cantidad \* precio unitario).
 
 ---
 
@@ -128,10 +143,11 @@ SELECT Nombre FROM Productos WHERE Precio > (SELECT AVG(Precio) FROM Productos);
 ```
 
 **Ejercicios**
-27\. Recuperar productos cuyo precio sea mayor al promedio de todos los productos.
-28\. Recuperar pedidos realizados por el cliente con más pedidos.
-29\. Recuperar empleados que trabajan en la misma ciudad que “Andrew Fuller”.
-30\. Recuperar proveedores que proveen productos más caros que el promedio.
+
+27. Recuperar productos cuyo precio sea mayor al promedio de todos los productos.
+28. Recuperar pedidos realizados por el cliente con más pedidos.
+29. Recuperar empleados que trabajan en la misma ciudad que “Andrew Fuller”.
+30. Recuperar proveedores que proveen productos más caros que el promedio.
 
 ---
 
@@ -148,11 +164,12 @@ HAVING AVG(Precio) > 30;
 ```
 
 **Ejercicios**
-31\. Obtener la cantidad de pedidos por cada año.
-32\. Obtener el promedio de precios por categoría.
-33\. Obtener los clientes con más de 20 pedidos.
-34\. Obtener las categorías cuyo precio promedio de producto sea mayor a 40.
-35\. Obtener el total de ventas (cantidad \* precio) por año.
+
+31. Obtener la cantidad de pedidos por cada año.
+32. Obtener el promedio de precios por categoría.
+33. Obtener los clientes con más de 20 pedidos.
+34. Obtener las categorías cuyo precio promedio de producto sea mayor a 40.
+35. Obtener el total de ventas (cantidad \* precio) por año.
 
 ---
 
@@ -169,10 +186,11 @@ SELECT YEAR(FechaPedido) AS Año, COUNT(*) FROM Pedidos GROUP BY YEAR(FechaPedid
 ```
 
 **Ejercicios**
-36\. Obtener los pedidos agrupados por mes y año.
-37\. Obtener el número de empleados contratados por década.
-38\. Obtener los clientes cuyo nombre de compañía tenga más de 20 caracteres.
-39\. Obtener los tres primeros caracteres del apellido de cada empleado.
+
+36. Obtener los pedidos agrupados por mes y año.
+37. Obtener el número de empleados contratados por década.
+38. Obtener los clientes cuyo nombre de compañía tenga más de 20 caracteres.
+39. Obtener los tres primeros caracteres del apellido de cada empleado.
 
 ---
 
@@ -190,11 +208,12 @@ INSERT INTO Clientes (ID, Nombre) VALUES ('C123','Cliente Demo');
 ```
 
 **Ejercicios**
-40\. Insertar un nuevo cliente ficticio.
-41\. Actualizar el teléfono de un proveedor específico.
-42\. Eliminar un transportista ficticio.
-43\. Aumentar en 10% el precio de todos los productos de la categoría “Seafood”.
-44\. Eliminar todos los pedidos de un cliente ficticio.
+
+40. Insertar un nuevo cliente ficticio.
+41. Actualizar el teléfono de un proveedor específico.
+42. Eliminar un transportista ficticio.
+43. Aumentar en 10% el precio de todos los productos de la categoría “Seafood”.
+44. Eliminar todos los pedidos de un cliente ficticio.
 
 ---
 
@@ -215,12 +234,13 @@ SELECT p.Nombre, c.NombreCategoria FROM Productos p JOIN Categorias c ON p.Categ
 ```
 
 **Ejercicios**
-45\. Crear una vista con los productos y el nombre de su categoría.
-46\. Crear una vista con los pedidos y el nombre del cliente.
-47\. Crear una función que retorne la antigüedad en años de un empleado dado su EmployeeID.
-48\. Crear un procedimiento que retorne los clientes ordenados por la cantidad de pedidos.
-49\. Crear un trigger que actualice automáticamente el stock de un producto después de insertar un pedido.
-50\. Crear un trigger que registre en una tabla de auditoría cada vez que se elimine un pedido.
+
+45. Crear una vista con los productos y el nombre de su categoría.
+46. Crear una vista con los pedidos y el nombre del cliente.
+47. Crear una función que retorne la antigüedad en años de un empleado dado su EmployeeID.
+48. Crear un procedimiento que retorne los clientes ordenados por la cantidad de pedidos.
+49. Crear un trigger que actualice automáticamente el stock de un producto después de insertar un pedido.
+50. Crear un trigger que registre en una tabla de auditoría cada vez que se elimine un pedido.
 
 ---
 
