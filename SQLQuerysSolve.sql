@@ -102,3 +102,57 @@ From
 	Employees
 Where
 	LastName like 'D%';
+
+
+/*
+12. Recuperar productos ordenados por categoría y luego por precio.
+13. Recuperar empleados ordenados por fecha de contratación (más antiguos primero).
+14. Recuperar empleados ordenados por país ascendente y ciudad descendente.*/
+
+-- 12. Recuperar productos ordenados por categoría y luego por precio.
+Select
+	*
+From
+	Products
+order By
+	CategoryID, UnitPrice;
+
+-- 13. Recuperar empleados ordenados por fecha de contratación (más antiguos primero).
+Select
+	*
+From
+	Employees
+Order By
+	HireDate;
+
+-- 14. Recuperar empleados ordenados por país ascendente y ciudad descendente.
+Select
+	*
+From
+	Employees
+Order By
+	Country asc, City desc;
+
+/*
+15. Recuperar lista de pedidos con nombre del cliente asociado.
+16. Recuperar lista de productos junto con su categoría.
+17. Recuperar lista de pedidos junto con el nombre completo del empleado que lo gestionó.
+18. Recuperar lista de productos y su proveedor.
+19. Recuperar lista de pedidos con cliente, empleado y transportista.
+20. Recuperar lista de categorías con la cantidad de productos que tiene cada una.
+*/
+
+-- 15. Recuperar lista de pedidos con nombre del cliente asociado.
+Select
+	OrderID,
+	o.ShipName,
+	o.CustomerID,
+	c.CustomerID,
+	ContactName,
+	c.CompanyName
+From
+	Orders as o
+inner join
+	Customers as c
+On 
+	o.CustomerID = c.CustomerID
