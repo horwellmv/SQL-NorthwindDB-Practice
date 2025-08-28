@@ -156,3 +156,79 @@ inner join
 	Customers as c
 On 
 	o.CustomerID = c.CustomerID
+
+-- 16. Recuperar lista de productos junto con su categoría.
+Select
+	p.ProductID,
+	p.ProductName,
+	c.CategoryID,
+	c.CategoryName
+From
+	Products as p
+	inner join
+	Categories as c
+on
+	p.CategoryID = c.CategoryID
+
+-- 17. Recuperar lista de pedidos junto con el nombre completo del empleado que lo gestionó.
+Select
+	o.OrderID,
+	o.CustomerID,
+	e.EmployeeID,
+	e.FirstName + ' ' + e.LastName as EmployedName
+From
+	Orders as o
+inner join
+	Employees as e
+on
+	o.EmployeeID = e.EmployeeID
+
+
+-- 18. Recuperar lista de productos y su proveedor.
+Select
+	p.ProductID,
+	p.ProductName,
+	s.SupplierID,
+	s.CompanyName
+From
+	Products as p
+	inner join
+	Suppliers as s
+on
+	p.SupplierID = s.SupplierID
+
+
+-- 19. Recuperar lista de pedidos con cliente, empleado y transportista.
+Select
+	o.OrderID,
+	o.OrderDate,
+	o.ShipName,
+	e.EmployeeID,
+	e.FirstName,
+	c.CustomerID,
+	c.CompanyName,
+	c.ContactName
+From
+	Orders as o
+inner join
+	Customers as c
+on
+	o.CustomerID = c.CustomerID
+inner join
+	Employees as e
+on 
+	o.EmployeeID = e.EmployeeID
+
+
+-- 20. Recuperar lista de categorías con la cantidad de productos que tiene cada una.
+Select
+	c.CategoryName,
+	SUM(p.UnitsInStock) as cantidad
+From
+	Categories as c
+inner join
+	Products as p
+on
+	c.CategoryID = p.CategoryID
+group By
+	c.CategoryName
