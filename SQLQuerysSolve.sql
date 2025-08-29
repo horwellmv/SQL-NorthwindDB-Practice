@@ -221,8 +221,10 @@ on
 
 
 -- 20. Recuperar lista de categorías con la cantidad de productos que tiene cada una.
+Use Northwind
 Select
 	c.CategoryName,
+	c.CategoryID,
 	SUM(p.UnitsInStock) as cantidad
 From
 	Categories as c
@@ -231,4 +233,89 @@ inner join
 on
 	c.CategoryID = p.CategoryID
 group By
-	c.CategoryName
+	c.CategoryName, c.CategoryID
+
+/*
+21. Recuperar el precio máximo de los productos.
+22. Recuperar el precio promedio de los productos de la categoría “Beverages”.
+23. Recuperar el total de pedidos realizados por cada cliente.
+24. Recuperar los 5 productos más caros.
+25. Recuperar clientes que han realizado más de 10 pedidos.
+26. Recuperar el total de ingresos por cada producto (cantidad * precio unitario).
+*/
+
+-- 21. Recuperar el precio máximo de los productos.
+Select
+	MAX(UnitPrice) as PrecioMaximo
+From
+	Products;
+
+-- 22. Recuperar el precio promedio de los productos de la categoría “Beverages”.
+Select
+	AVG(UnitPrice) as precioPromedio
+From
+	Products as p
+	inner join
+	Categories as c
+on 
+	p.CategoryID = c.CategoryID
+Where
+	c.CategoryName = 'Beverages'
+
+-- 23. Recuperar el total de pedidos realizados por cada cliente.
+Select
+	c.CompanyName,
+	Count(o.OrderID) as ordenes
+From
+	Customers as c
+	inner join
+	Orders as o
+on
+	c.CustomerID = o.CustomerID
+Group by
+	c.CustomerID,
+	c.CompanyName
+order By
+	ordenes
+
+
+-- 24. Recuperar los 5 productos más caros.
+Select top 5
+	*
+From
+	Products
+Order by
+	UnitPrice desc
+
+
+-- 25. Recuperar clientes que han realizado más de 10 pedidos.
+Select
+	c.CustomerID,
+	c.CompanyName,
+	count(o.OrderID) as CantidadPedidos
+From
+	Customers as c
+	inner join
+	Orders as o
+on
+	c.CustomerID = o.CustomerID
+Group by
+	c.CustomerID,
+	c.CompanyName
+Having
+	count(o.OrderID) > 10
+Order by
+	CantidadPedidos desc;
+
+
+-- 26. Recuperar el total de ingresos por cada producto (cantidad * precio unitario).
+Select
+	ProductID,
+	productName,
+	UnitPrice,
+	UnitsInStock,
+	UnitPrice * UnitsInStock as Ingresos
+From
+	Products
+Order By
+	Ingresos desc
