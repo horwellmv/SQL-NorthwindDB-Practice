@@ -319,3 +319,35 @@ From
 	Products
 Order By
 	Ingresos desc
+
+/*
+27. Recuperar productos cuyo precio sea mayor al promedio de todos los productos.
+28. Recuperar pedidos realizados por el cliente con más pedidos.
+29. Recuperar empleados que trabajan en la misma ciudad que “Andrew Fuller”.
+30. Recuperar proveedores que proveen productos más caros que el promedio.
+*/
+
+
+-- 27. Recuperar productos cuyo precio sea mayor al promedio de todos los productos.
+Select
+	*
+From
+	Products
+Where
+	UnitPrice > (SELECT AVG(UnitPrice)
+				 FROM Products);
+
+-- 28. Recuperar pedidos realizados por el cliente con más pedidos.
+Select
+	*
+From
+	Orders
+Where
+	CustomerID = (	Select top 1
+						CustomerID
+					From
+						Orders
+					group by
+						CustomerID
+					order by
+						Count(OrderID) desc );
