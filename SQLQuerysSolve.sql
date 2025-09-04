@@ -336,3 +336,18 @@ From
 Where
 	UnitPrice > (SELECT AVG(UnitPrice)
 				 FROM Products);
+
+-- 28. Recuperar pedidos realizados por el cliente con más pedidos.
+Select
+	*
+From
+	Orders
+Where
+	CustomerID = (	Select top 1
+						CustomerID
+					From
+						Orders
+					group by
+						CustomerID
+					order by
+						Count(OrderID) desc );
