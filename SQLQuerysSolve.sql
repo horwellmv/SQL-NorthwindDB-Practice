@@ -351,3 +351,33 @@ Where
 						CustomerID
 					order by
 						Count(OrderID) desc );
+
+-- 29. Recuperar empleados que trabajan en la misma ciudad que “Andrew Fuller”.
+-- Solo arrojaba un resultado, para probar la query, usé un empleado que vivie en una ciudad más común.
+Select
+	*
+From 
+	Employees
+Where
+	City = (Select
+				City
+			From
+				Employees
+			Where LastName = 'Buchanan' and FirstName = 'Steven' );
+
+--30. Recuperar proveedores que proveen productos más caros que el promedio.
+Select
+	s.*
+From
+	Suppliers as s
+	inner join
+	Products as p
+	on 
+	p.SupplierID = s.SupplierID
+Where
+	UnitPrice >(Select
+					AVG(UnitPrice)
+				From
+					Products)
+Order By
+	s.CompanyName;
