@@ -411,3 +411,40 @@ From
 	Products
 group by
 	CategoryID
+
+-- 33. Obtener los clientes con más de 20 pedidos.
+Select
+	CustomerID as 'ID Cliente', COUNT(OrderID) as '# Pedididos'
+From
+	Orders
+Group by
+	CustomerID
+Having
+	COUNT(OrderID) > 20;
+
+-- 34. Obtener las categorías cuyo precio promedio de producto sea mayor a 40.
+Select
+	CategoryID as Categoria,
+	AVG(UnitPrice) as 'Costo Promedio'
+From
+	Products
+group by
+	CategoryID
+Having
+	AVG(UnitPrice) > 40;
+
+
+-- 35. Obtener el total de ventas (cantidad * precio) por año.
+Select
+	YEAR(o.OrderDate) as Año,
+	SUM(d.UnitPrice * d.Quantity) as Total
+From
+	[Order Details] as d
+	inner join
+	Orders as o
+	on
+	d.OrderID = o.OrderID
+Group by
+	YEAR(o.OrderDate)
+Order By
+	Año;
