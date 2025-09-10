@@ -402,3 +402,12 @@ Group by
 	Year(OrderDate)
 Order By
 	Año
+
+-- 32. Obtener el promedio de precios por categoría.
+Select
+	CategoryID as Categoria,
+	AVG(UnitPrice) as 'Costo Promedio'
+From
+	Products
+group by
+	CategoryID
