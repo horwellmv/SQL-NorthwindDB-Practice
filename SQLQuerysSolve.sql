@@ -381,3 +381,24 @@ Where
 					Products)
 Order By
 	s.CompanyName;
+
+
+/*
+31. Obtener la cantidad de pedidos por cada año.
+32. Obtener el promedio de precios por categoría.
+33. Obtener los clientes con más de 20 pedidos.
+34. Obtener las categorías cuyo precio promedio de producto sea mayor a 40.
+35. Obtener el total de ventas (cantidad * precio) por año.
+*/
+
+
+-- 31. Obtener la cantidad de pedidos por cada año.
+Select
+	 YEAR(OrderDate) as Año,
+	 count(OrderID) as 'Cantidad pedidos'
+From
+	Orders
+Group by
+	Year(OrderDate)
+Order By
+	Año
