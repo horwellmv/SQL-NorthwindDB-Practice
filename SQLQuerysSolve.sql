@@ -448,3 +448,49 @@ Group by
 	YEAR(o.OrderDate)
 Order By
 	Año;
+
+/*
+36. Obtener los pedidos agrupados por mes y año.
+37. Obtener el número de empleados contratados por década.
+38. Obtener los clientes cuyo nombre de compañía tenga más de 20 caracteres.
+39. Obtener los tres primeros caracteres del apellido de cada empleado.
+*/
+
+-- 36. Obtener los pedidos agrupados por mes y año.
+Select
+	YEAR(OrderDate) as Año,
+	MONTH(OrderDate) as Mes,
+	COUNT(OrderID) as Total
+from
+	Orders
+Group By
+	YEAR(OrderDate),
+	MONTH(OrderDate)
+order By
+	Año, Mes;
+
+-- 37. Obtener el número de empleados contratados por Año. Decada no tiene sentido según la historia de la DB.
+Select
+	YEAR(HireDate) as Año,
+	COUNT(EmployeeID) as Contratos
+From
+	Employees
+Group By
+	YEAR(HireDate)
+Order By
+	Año;
+
+-- 38. Obtener los clientes cuyo nombre de compañía tenga más de 20 caracteres.
+Select
+	*
+From
+	Customers
+Where
+	LEN(CompanyName) > 20;
+
+-- 39. Obtener los tres primeros caracteres del apellido de cada empleado.
+Select
+	LEFT(LastName, 3)	as 'Apellido Corto',
+	LastName			as 'Apellido Completo'
+From
+	Employees
