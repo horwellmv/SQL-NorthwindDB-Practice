@@ -479,3 +479,18 @@ Group By
 	YEAR(HireDate)
 Order By
 	Año;
+
+-- 38. Obtener los clientes cuyo nombre de compañía tenga más de 20 caracteres.
+Select
+	*
+From
+	Customers
+Where
+	LEN(CompanyName) > 20;
+
+-- 39. Obtener los tres primeros caracteres del apellido de cada empleado.
+Select
+	LEFT(LastName, 3)	as 'Apellido Corto',
+	LastName			as 'Apellido Completo'
+From
+	Employees
