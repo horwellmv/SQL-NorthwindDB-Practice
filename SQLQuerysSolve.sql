@@ -493,4 +493,39 @@ Select
 	LEFT(LastName, 3)	as 'Apellido Corto',
 	LastName			as 'Apellido Completo'
 From
-	Employees
+	Employees;
+
+
+/*
+40. Insertar un nuevo cliente ficticio.
+41. Actualizar el teléfono de un proveedor específico.
+42. Eliminar un transportista ficticio.
+43. Aumentar en 10% el precio de todos los productos de la categoría “Seafood”.
+44. Eliminar todos los pedidos de un cliente ficticio.
+*/
+
+-- 40. Insertar un nuevo cliente ficticio.
+INSERT INTO Customers
+	(CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax)
+VALUES
+	('FICTI', 'Fictitious Company Ltd.', 'Max Power', 'Purchasing Manager', 'Calle Falsa 123', 'Springfield', NULL, '28001', 'Spain', '+34-91-1234567', '+34-91-7654321');
+
+-- 41. Actualizar el teléfono de un proveedor específico.
+UPDATE Customers
+SET Phone = '+34-91-0000000'
+WHERE CustomerID = 'FICTI';
+
+-- 42. Eliminar un transportista ficticio.
+Select
+	*
+From
+	Shippers
+Insert into Shippers
+	(CompanyName, Phone)
+Values
+	('Fedex','(503) 555-000');
+
+Delete From
+	Shippers
+Where
+	ShipperID = 4;
