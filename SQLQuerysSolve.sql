@@ -529,3 +529,44 @@ Delete From
 	Shippers
 Where
 	ShipperID = 4;
+
+-- 43. Aumentar en 10% el precio de todos los productos de la categoría “Seafood”.
+Select
+	*
+From
+	Products
+Where CategoryID = 8;
+
+
+UPDATE Products
+SET UnitPrice = UnitPrice * 1.10
+WHERE CategoryID = (
+    SELECT CategoryID 
+    FROM Categories 
+    WHERE CategoryName = 'Seafood'
+	and ProductID = 13
+);
+
+-- 44. Eliminar todos los pedidos de un cliente ficticio.
+Select
+	*
+From
+	Orders
+Where
+	CustomerID = 'ficticio';
+--Como no tenemos definido el atributo cascade de la base de datos, debemos eliminar primero las tablas relacionadas que dependen de las ordenes.
+Delete From
+	[Order Details]
+Where
+	OrderID in (
+		Select
+			OrderID
+		From
+			Orders
+		Where
+			CustomerID = 'ficticio');
+-- Finalmente podemos eliminar los pedidios de la tabla Orders.
+Delete From 
+	[Orders]
+Where
+	CustomerID = 'ficticio';
