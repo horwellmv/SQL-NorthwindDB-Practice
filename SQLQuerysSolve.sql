@@ -570,3 +570,124 @@ Delete From
 	[Orders]
 Where
 	CustomerID = 'ficticio';
+
+/*
+
+45. Crear una vista con los productos y el nombre de su categoría.
+46. Crear una vista con los pedidos y el nombre del cliente.
+47. Crear una función que retorne la antigüedad en años de un empleado dado su EmployeeID.
+48. Crear un procedimiento que retorne los clientes ordenados por la cantidad de pedidos.
+49. Crear un trigger que actualice automáticamente el stock de un producto después de insertar un pedido.
+50. Crear un trigger que registre en una tabla de auditoría cada vez que se elimine un pedido.
+
+*/
+
+-- 45. Crear una vista con los productos y el nombre de su categoría.
+CREATE VIEW
+	Vista_Productos_Categorias AS
+SELECT 
+    p.ProductID,
+    p.ProductName,
+    c.CategoryName,
+    p.QuantityPerUnit,
+    p.UnitPrice,
+    p.UnitsInStock
+FROM Products p
+INNER JOIN Categories c
+    ON p.CategoryID = c.CategoryID;
+
+-- HAcemos una consulta usando la vista creada 
+SELECT
+	*
+FROM
+	Vista_Productos_Categorias;
+
+-- 46. Crear una vista con los pedidos y el nombre del cliente.
+CREATE VIEW
+	Vista_Pedidos_Clientes AS
+SELECT
+	O.OrderID,
+	C.CustomerID,
+	C.CompanyName	AS Compañia,
+	O.OrderDate		AS Fecha,
+	C.City			AS Ciudad,
+	C.Phone			AS Telefono
+FROM
+	Orders O
+inner join
+	Customers C
+ON
+	O.CustomerID = C.CustomerID;
+
+-- Usamos la Vista creada anteriormente
+SELECT
+	*
+FROM
+	Vista_Pedidos_Clientes;
+
+-- 47. Crear una función que retorne la antigüedad en años de un empleado dado su EmployeeID.
+
+CREATE FUNCTION
+	fn_ANtiguedad_Empleado (@EmployeedID INT)
+RETURNS INT
+AS
+BEGIN
+	DECLARE @FechaContratacion DATETIME;
+	DECLARE @Antiguedad INT;
+
+	SELECT
+		@FechaContratacion = HireDate
+	FROM
+		Employees
+	WHERE
+		EmployeeID = @EmployeedID;
+
+	IF @FechaContratacion IS NOT NULL
+		SET @Antiguedad = DATEDIFF(YEAR,@FechaContratacion, GETDATE());
+	ELSE
+		SET @Antiguedad = NULL;
+	RETURN @Antiguedad;
+END;
+GO
+
+-- probamos la funcion con algun ID como el 5.
+SELECT
+	dbo.fn_ANtiguedad_Empleado (5) AS Antiguedad;
+
+-- 48. Crear un procedimiento que retorne los clientes ordenados por la cantidad de pedidos.
+CREATE PROCEDURE 
+	Procedure_Clientes_Cantidad_Pedidos
+AS
+BEGIN
+    SELECT 
+        C.CustomerID,
+        C.CompanyName		AS	Compañia,
+        COUNT(O.OrderID)	AS CantidadPedidos
+    FROM 
+		Customers C
+	LEFT JOIN 
+		Orders O 
+	ON C.CustomerID = O.CustomerID
+    GROUP BY 
+		C.CustomerID, C.CompanyName
+    ORDER BY 
+		CantidadPedidos DESC;
+END;
+GO
+
+-- Ejecutamos nuestro nuevo Procedure
+EXEC Procedure_Clientes_Cantidad_Pedidos;
+
+--49. Crear un trigger que actualice automáticamente el stock de un producto después de insertar un pedido.
+
+
+
+
+
+
+
+
+
+
+
+--50. Crear un trigger que registre en una tabla de auditoría cada vez que se elimine un pedido.
