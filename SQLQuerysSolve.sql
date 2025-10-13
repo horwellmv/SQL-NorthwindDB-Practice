@@ -680,14 +680,176 @@ EXEC Procedure_Clientes_Cantidad_Pedidos;
 
 --49. Crear un trigger que actualice automáticamente el stock de un producto después de insertar un pedido.
 
+CREATE TRIGGER
+	trigger_ActualizarStock
+ON
+	[Order Details]
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON; -- elimina el mensaje de n filas afectadas.
 
+    -- Verificar si hay suficiente stock para todos los productos insertados
+    IF EXISTS (
+        SELECT
+			1 -- Manera de verificar que existe al menos una fila, o que hay resultados.
+        FROM 
+			inserted i
+        INNER JOIN 
+			Products p
+			ON i.ProductID = p.ProductID
+        WHERE 
+			p.UnitsInStock < i.Quantity
+    )
+    BEGIN
+		/* RAICEERROR recibe el mensaje, 
+		una escala de gravedad:
+		• 0–10: Informativo (no se considera error).
+		• 11–16: Errores del usuario o aplicación (se pueden capturar).
+		• 17–19: Errores del sistema que el usuario no puede resolver.
+		• 20–25: Errores críticos (terminan la conexión).
+		y un numero para identificar errores o estados personales de mi base de datos.*/
+        RAISERROR('No hay suficiente stock para uno o más productos del pedido.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END;
 
+    -- Actualizar el stock de los productos con base en los pedidos insertados
+    UPDATE p
+    SET 
+		p.UnitsInStock = p.UnitsInStock - i.Quantity
+    FROM
+		Products p
+    INNER JOIN 
+		inserted i
+	ON p.ProductID = i.ProductID;
+END;
+GO
 
+-- Prueba exitosa
+-- Producto con suficiente stock
+INSERT INTO [Order Details] (OrderID, ProductID, UnitPrice, Quantity, Discount)
+VALUES (10248, 1, 18.00, 1, 0);
 
+-- producto sin stock suficiente
+INSERT INTO [Order Details] (OrderID, ProductID, UnitPrice, Quantity, Discount)
+VALUES (10249, 1, 18.00, 999, 0);
 
-
-
-
-
+--Verificar el stock de la tabla productos con id 1.
+select *
+from Products
+where ProductID = 1;
 
 --50. Crear un trigger que registre en una tabla de auditoría cada vez que se elimine un pedido.
+
+CREATE TABLE Audit_Orders (
+    AuditID		INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID		INT,
+    CustomerID	NCHAR(5),
+    EmployeeID	INT,
+    OrderDate	DATETIME,
+    DeletedAt	DATETIME,
+    DeletedBy	NVARCHAR(100)
+);
+
+CREATE TABLE Audit_Order_Details (
+    AuditDetailID	INT IDENTITY(1,1) PRIMARY KEY,
+    AuditID			INT,              -- Relación con Audit_Orders
+    OrderID			INT,
+    ProductID		INT,
+    UnitPrice		MONEY,
+    Quantity		SMALLINT,
+    Discount		REAL
+);
+
+CREATE TRIGGER trigger_Auditoria_EliminacionPedidos
+ON Orders
+AFTER DELETE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Registrar primero los detalles del pedido eliminado
+    INSERT INTO Audit_Order_Details (AuditID, OrderID, ProductID, UnitPrice, Quantity, Discount)
+    SELECT 
+        NULL,  -- temporal, se actualizará luego
+        od.OrderID,
+        od.ProductID,
+        od.UnitPrice,
+        od.Quantity,
+        od.Discount
+    FROM [Order Details] od
+    INNER JOIN deleted d ON od.OrderID = d.OrderID;
+
+    -- Registrar los pedidos eliminados
+    INSERT INTO Audit_Orders (OrderID, CustomerID, EmployeeID, OrderDate, DeletedAt, DeletedBy)
+    SELECT 
+        d.OrderID,
+        d.CustomerID,
+        d.EmployeeID,
+        d.OrderDate,
+        GETDATE(),
+        SYSTEM_USER
+    FROM deleted d;
+
+    -- Actualizar AuditID en los detalles insertados
+    UPDATE od
+    SET od.AuditID = ao.AuditID
+    FROM Audit_Order_Details od
+    INNER JOIN Audit_Orders ao ON ao.OrderID = od.OrderID
+    WHERE od.AuditID IS NULL;
+END;
+GO
+
+
+--Creando orden para eliminar despues
+INSERT INTO Orders (CustomerID, EmployeeID, OrderDate, RequiredDate, ShipVia, Freight, ShipName, ShipAddress, ShipCity, ShipCountry)
+VALUES ('ALFKI', 5, GETDATE(), DATEADD(DAY, 7, GETDATE()), 1, 20.00, 'Fidel MuVal', 'Finca El Tesoro', 'Medallo', 'Colombia');
+
+
+-- obtener el id del pedido
+SELECT TOP 1 OrderID
+FROM Orders
+ORDER BY OrderID DESC;
+
+--Cargar los detalles del pedido.
+INSERT INTO [Order Details] (OrderID, ProductID, UnitPrice, Quantity, Discount)
+VALUES
+(11080, 1, 18.00, 5, 0),
+(11080, 8, 20.00, 1, 0),
+(11080, 2, 19.00, 3, 0);
+
+
+--test eliminando un pedido de Details y Orders
+BEGIN TRANSACTION;
+    -- Eliminar los detalles del pedido
+    DELETE FROM [Order Details]
+    WHERE OrderID = 11080;  
+
+    -- Eliminar el pedido principal (activará el trigger de auditoría)
+    DELETE FROM Orders
+    WHERE OrderID = 11080;  
+COMMIT TRANSACTION;
+
+
+-- Test consultando el historial de pedidos eliminados y sus detalles para auditar.
+SELECT 
+    oa.AuditID,
+    oa.OrderID,
+    oa.CustomerID,
+    oa.DeletedAt,
+    oa.DeletedBy,
+    od.ProductID,
+    od.Quantity,
+    od.UnitPrice,
+    od.Discount
+FROM
+	Audit_Orders oa
+INNER JOIN
+	Audit_Order_Details od
+    ON oa.AuditID = od.AuditID
+ORDER BY
+	oa.AuditID, od.OrderID;
+
+select * from Audit_Orders
+order by OrderID desc
